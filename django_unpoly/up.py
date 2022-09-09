@@ -31,6 +31,12 @@ class UpFormMixin(UpMixin):
         response.status_code = 422
         return response
 
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        super().form_valid(form)
+        response = HttpResponse("", content_type="text/plain")
+        response["X-Up-Accept-Layer"] = "null"
+        return response    
+
 
 class UpDjangoConcurrencyMixin(UpMixin):
     def get(self, request, *args, **kwargs):
